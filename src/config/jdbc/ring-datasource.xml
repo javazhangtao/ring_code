@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd  
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+	
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+       	<property name="url" value="${jdbc.ring.url}" />
+		<property name="username" value="${jdbc.ring.username}" />
+		<property name="password" value="${jdbc.ring.password}" />
+		<!-- 驱动名称 -->  
+        <property name="DriverClassName" value="${jdbc.ring.driverClassName}" /> 
+        
+        <!-- 获取连接时测试是否有效 -->
+		<property name="testOnBorrow" value="false" />
+		<!-- 归还连接时测试是否有效 -->
+		<property name="testOnReturn" value="false" />
+		<!-- 连接空闲时测试是否有效 -->
+		<property name="testWhileIdle" value="true" />
+		
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize" value="${druid.initialSize}" />
+		<property name="minIdle" value="${druid.minIdle}" />
+		<property name="maxActive" value="${druid.maxActive}" />
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="${druid.maxWait}" /> 
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="${druid.timeBetweenEvictionRunsMillis}" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="${druid.minEvictableIdleTimeMillis}" />
+		<!-- 测试有效用的SQL Query -->  
+        <property name="validationQuery" value="SELECT 'x'" />
+	</bean>
+	
+	
+	<!-- JPA实体工厂配置 -->  
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">  
+        <property name="dataSource" ref="dataSource" />  
+        <!-- 扫描实体路径 -->  
+        <property name="packagesToScan" value="ring.entity" />  
+        <property name="jpaVendorAdapter">  
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">  
+                <property name="showSql" value="true" />  
+                <property name="generateDdl" value="false" />  
+            </bean>  
+        </property>  
+        <property name="jpaProperties">  
+            <props>  
+                <!--设置外连接抓取树的最大深度 -->  
+                <prop key="hibernate.max_fetch_depth">5</prop>  
+                <prop key="hibernate.jdbc.fetch_size">18</prop>  
+                <prop key="hibernate.jdbc.batch_size">10</prop>  
+                <!-- 自动建表类型 validate|create|create-drop|update -->  
+                <prop key="hibernate.hbm2ddl.auto">none</prop>  
+                <!-- 是否显示SQL -->  
+                <prop key="hibernate.show_sql">false</prop>  
+                <!-- 显示SQL是否格式化 -->  
+                <prop key="hibernate.format_sql">false</prop>  
+                <!-- 关闭二级缓存 -->  
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>  
+                <!-- 关闭实体字段映射校验 -->  
+                <prop key="javax.persistence.validation.mode">none</prop> 
+                <!-- hibernate 拦截器配置 -->
+                <prop key="hibernate.ejb.interceptor">ring.repository.suppor.interceptors.HibernateInterceptor</prop> 
+           		<!-- 处理hibernate懒加载 -->
+                <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
+            </props>  
+        </property>  
+    </bean>
+	
+	<!-- 配置事务管理器 -->  
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">  
+        <property name="dataSource" ref="dataSource" />  
+        <property name="entityManagerFactory" ref="entityManagerFactory" />  
+    </bean>
+    
+    <jpa:repositories base-package="ring.repository"
+		repository-impl-postfix="Impl" entity-manager-factory-ref="entityManagerFactory"
+		factory-class="ring.repository.suppor.SuperRepositoryFactoryBean"
+		transaction-manager-ref="transactionManager" />
+		
+	<!--声明采用注解的方式申明事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+</beans>
