@@ -12,24 +12,25 @@ import javax.persistence.Table;
 import ring.common.Dictionary;
 import ring.entity.SuperEntity;
 @Entity
-@Table(name="ring_function_role")
-public class FunctionRole extends SuperEntity {
-	private static final long serialVersionUID = -5624481122763972645L;
+@Table(name="ring_mold_role")
+public class MoldRole extends SuperEntity{
+	
+	private static final long serialVersionUID = 220427859049832085L;
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@ManyToOne
-	@JoinColumn(name="function_id")
-	private Function function;
+	@JoinColumn(name="ring_id")
+	private Rings rings;
+	@ManyToOne
+	@JoinColumn(name="mold_id")
+	private Mold mold;
 	@ManyToOne
 	@JoinColumn(name="role_id")
 	private Role role;
-	@Column(name="operates")
-	private String operates=Dictionary.ROLE_BROWSE;
 	@Column(name="status")
 	private int status=Dictionary.STATUS_BLOCK;
-	
 	
 	public Long getId() {
 		return id;
@@ -37,23 +38,23 @@ public class FunctionRole extends SuperEntity {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Function getFunction() {
-		return function;
+	public Rings getRings() {
+		return rings;
 	}
-	public void setFunction(Function function) {
-		this.function = function;
+	public void setRings(Rings rings) {
+		this.rings = rings;
+	}
+	public Mold getMold() {
+		return mold;
+	}
+	public void setMold(Mold mold) {
+		this.mold = mold;
 	}
 	public Role getRole() {
 		return role;
 	}
 	public void setRole(Role role) {
 		this.role = role;
-	}
-	public String getOperates() {
-		return operates;
-	}
-	public void setOperates(String operates) {
-		this.operates = operates;
 	}
 	public int getStatus() {
 		return status;

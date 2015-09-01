@@ -13,25 +13,28 @@ import ring.common.Dictionary;
 import ring.entity.SuperEntity;
 
 @Entity
-@Table(name="ring_role")
-public class Role extends SuperEntity{
-	private static final long serialVersionUID = -573659964478536158L;
-	
+@Table(name="ring_category")
+public class Category extends SuperEntity{
+	private static final long serialVersionUID = 1841335303267371646L;
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(name="role_name")
-	private String roleName;
-	@Column(name="role_code")
-	private String roleCode;
+	@Column(name="category_name")
+	private String category_name;
+	@Column(name="category_code")
+	private String category_code;
 	@ManyToOne
 	@JoinColumn(name="parent_id")
-	private Role parent;
+	private Category parent;
+	@ManyToOne
+	@JoinColumn(name="model_id")
+	private Model model;
 	@Column(name="status")
 	private int status=Dictionary.STATUS_BLOCK;
 	@Column(name="priority")
-	private int priority;	
+	private int priority;
+	
 	
 	public Long getId() {
 		return id;
@@ -39,23 +42,23 @@ public class Role extends SuperEntity{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getRoleName() {
-		return roleName;
+	public String getCategory_name() {
+		return category_name;
 	}
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
+	public void setCategory_name(String category_name) {
+		this.category_name = category_name;
 	}
-	public String getRoleCode() {
-		return roleCode;
+	public String getCategory_code() {
+		return category_code;
 	}
-	public void setRoleCode(String roleCode) {
-		this.roleCode = roleCode;
+	public void setCategory_code(String category_code) {
+		this.category_code = category_code;
 	}
-	public Role getParent() {
-		return parent;
+	public Model getModel() {
+		return model;
 	}
-	public void setParent(Role parent) {
-		this.parent = parent;
+	public void setModel(Model model) {
+		this.model = model;
 	}
 	public int getStatus() {
 		return status;
@@ -68,5 +71,11 @@ public class Role extends SuperEntity{
 	}
 	public void setPriority(int priority) {
 		this.priority = priority;
+	}
+	public Category getParent() {
+		return parent;
+	}
+	public void setParent(Category parent) {
+		this.parent = parent;
 	}
 }

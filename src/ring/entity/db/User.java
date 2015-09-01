@@ -31,10 +31,6 @@ public class User extends SuperEntity{
 	private String email;
 	@Column(name="status")
 	private Integer status=Dictionary.STATUS_BLOCK;
-	@Column(name="create_time")
-	private Long createTime;
-	
-	
 	
 	public Long getId() {
 		return id;
@@ -78,13 +74,4 @@ public class User extends SuperEntity{
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	public Long getCreateTime() {
-		return createTime;
-	}
-	public void setCreateTime(Long createTime) {
-		this.createTime = createTime;
-	}
-	
-	
-
 }

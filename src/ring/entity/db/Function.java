@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
 import ring.common.Dictionary;
 import ring.entity.SuperEntity;
 
@@ -30,8 +29,8 @@ public class Function extends SuperEntity{
 	private Function parent;
 	@Column(name="status")
 	private int status=Dictionary.STATUS_BLOCK;
-	@Column(name="create_time")
-	private Long createTime;
+	@Column(name="priority")
+	private int priority;
 	
 	
 	public Long getId() {
@@ -64,11 +63,4 @@ public class Function extends SuperEntity{
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	public Long getCreateTime() {
-		return createTime;
-	}
-	public void setCreateTime(Long createTime) {
-		this.createTime = createTime;
-	}
-
 }

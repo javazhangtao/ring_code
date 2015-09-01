@@ -5,29 +5,27 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import ring.common.Dictionary;
 import ring.entity.SuperEntity;
+
 @Entity
-@Table(name="ring_user_role")
-public class UserRole extends SuperEntity {
-	private static final long serialVersionUID = 2662918055539326397L;
+@Table(name="ring_model")
+public class Model extends SuperEntity {
+	private static final long serialVersionUID = 7355948035624671501L;
 
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@ManyToOne
-	@JoinColumn(name="user_id")
-	private User user;
-	@ManyToOne
-	@JoinColumn(name="role_id")
-	private Role role;
+	@Column(name="model_name")
+	private String modelName;
+	@Column(name="model_path")
+	private String modelPath;
 	@Column(name="status")
 	private int status=Dictionary.STATUS_BLOCK;
+	
 	
 	public Long getId() {
 		return id;
@@ -35,17 +33,17 @@ public class UserRole extends SuperEntity {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public User getUser() {
-		return user;
+	public String getModelName() {
+		return modelName;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setModelName(String modelName) {
+		this.modelName = modelName;
 	}
-	public Role getRole() {
-		return role;
+	public String getModelPath() {
+		return modelPath;
 	}
-	public void setRole(Role role) {
-		this.role = role;
+	public void setModelPath(String modelPath) {
+		this.modelPath = modelPath;
 	}
 	public int getStatus() {
 		return status;

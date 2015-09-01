@@ -11,49 +11,48 @@ import javax.persistence.Table;
 
 import ring.common.Dictionary;
 import ring.entity.SuperEntity;
+
 @Entity
-@Table(name="ring_function_role")
-public class FunctionRole extends SuperEntity {
-	private static final long serialVersionUID = -5624481122763972645L;
+@Table(name="ring_category_attrs")
+public class CategoryAttrs extends SuperEntity {
+	private static final long serialVersionUID = 1615456947399890740L;
+	
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@ManyToOne
-	@JoinColumn(name="function_id")
-	private Function function;
-	@ManyToOne
-	@JoinColumn(name="role_id")
-	private Role role;
-	@Column(name="operates")
-	private String operates=Dictionary.ROLE_BROWSE;
+	@JoinColumn(name="category_id")
+	private Category category;
+	@Column(name="attr_name")
+	private String attrName;
+	@Column(name="attr_value")
+	private String attrValue;
 	@Column(name="status")
 	private int status=Dictionary.STATUS_BLOCK;
-	
-	
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Function getFunction() {
-		return function;
+	public Category getCategory() {
+		return category;
 	}
-	public void setFunction(Function function) {
-		this.function = function;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
-	public Role getRole() {
-		return role;
+	public String getAttrName() {
+		return attrName;
 	}
-	public void setRole(Role role) {
-		this.role = role;
+	public void setAttrName(String attrName) {
+		this.attrName = attrName;
 	}
-	public String getOperates() {
-		return operates;
+	public String getAttrValue() {
+		return attrValue;
 	}
-	public void setOperates(String operates) {
-		this.operates = operates;
+	public void setAttrValue(String attrValue) {
+		this.attrValue = attrValue;
 	}
 	public int getStatus() {
 		return status;
@@ -61,4 +60,6 @@ public class FunctionRole extends SuperEntity {
 	public void setStatus(int status) {
 		this.status = status;
 	}
+	
+
 }
