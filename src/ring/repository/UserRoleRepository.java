@@ -6,6 +6,7 @@ import ring.entity.db.UserRole;
 import ring.repository.suppor.SuperRepository;
 
 @Repository
-public interface UserRoleRepository extends SuperRepository<UserRole, Long> {
+public interface UserRoleRepository extends SuperRepository<UserRole, Long>{
 
+	UserRole findOneByUserIdAndStatus(final Long userId , final Integer status);
 }

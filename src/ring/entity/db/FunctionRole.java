@@ -26,7 +26,7 @@ public class FunctionRole extends SuperEntity {
 	@JoinColumn(name="role_id")
 	private Role role;
 	@Column(name="operates")
-	private String operates=Dictionary.ROLE_BROWSE;
+	private Integer operates=Dictionary.ROLE_BROWSE;
 	@Column(name="status")
 	private int status=Dictionary.STATUS_BLOCK;
 	
@@ -49,10 +49,10 @@ public class FunctionRole extends SuperEntity {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	public String getOperates() {
+	public Integer getOperates() {
 		return operates;
 	}
-	public void setOperates(String operates) {
+	public void setOperates(Integer operates) {
 		this.operates = operates;
 	}
 	public int getStatus() {

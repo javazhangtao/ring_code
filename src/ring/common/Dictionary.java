@@ -21,10 +21,9 @@ public class Dictionary {
 	/**
 	 * 	系统操作权限
 	 */
-	public final static String ROLE_BROWSE="browse";//浏览
-	public final static String ROLE_ADD="add";//新增
-	public final static String ROLE_DELETE="delete";//删除
-	public final static String ROLE_UPDATE="update";//修改
-	public final static String ROLE_SUPER="super";//超级权限
-	
+	public final static Integer ROLE_BROWSE=4;//浏览
+	public final static Integer ROLE_ADD=3;//新增
+	public final static Integer ROLE_UPDATE=2;//修改
+	public final static Integer ROLE_DELETE=1;//删除
+	public final static Integer ROLE_SUPER=0;//超级权限
 }
